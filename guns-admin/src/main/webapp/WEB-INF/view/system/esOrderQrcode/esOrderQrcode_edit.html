@@ -1,0 +1,32 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="id" value="${item.id}" underline="true"/>
+                            <#input id="batch" name="批次" value="${item.batch}" underline="true"/>
+                            <#input id="qrcode" name="二维码图片url" value="${item.qrcode}" underline="true"/>
+                            <#input id="orderId" name="订单id" value="${item.orderId}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="status" name="状态(0:未使用 1:已使用)" value="${item.status}" underline="true"/>
+                            <#input id="createTime" name="创建时间" value="${item.createTime}" underline="true"/>
+                            <#input id="updateTime" name="更新时间" value="${item.updateTime}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="EsOrderQrcodeInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="EsOrderQrcodeInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/system/esOrderQrcode/esOrderQrcode_info.js"></script>
+@}
