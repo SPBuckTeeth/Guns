@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.EsOrderQrcode;
 import com.stylefeng.guns.modular.system.service.IEsOrderQrcodeService;
 
+import java.util.List;
+
 /**
  * 二维码生成控制器
  *
@@ -60,7 +62,8 @@ public class EsOrderQrcodeController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-        return esOrderQrcodeService.selectList(null);
+        List<EsOrderQrcode> list = esOrderQrcodeService.selectList(null);
+        return list;
     }
 
     /**

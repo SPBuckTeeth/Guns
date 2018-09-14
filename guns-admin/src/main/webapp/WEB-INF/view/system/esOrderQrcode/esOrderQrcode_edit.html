@@ -8,21 +8,24 @@
 
             <div class="row">
                 <div class="col-sm-6 b-r">
-                    <label class="col-md-3 col-sm-3 control-label">二维码图片:</label>
+                    <label class="col-md-3 col-sm-3 control-label">二维码:</label>
                     <a href="${item.qrcode}" target="_blank">
                         <img src="${item.qrcode}" class="img-circle message-avatar" style="width: 120px;height:120px;"/>
                     </a>
-                            <#input id="batch" name="批次" value="${item.batch}" underline="true" readonly="readonly"/>
-                            <#input id="orderId" name="订单id" value="${item.orderId}" readonly="readonly"/>
+                    <div class="hr-line-dashed"></div>
+                    <#input id="batch" name="批次" value="${item.batch}" underline="true" readonly="readonly"/>
                 </div>
 
                 <div class="col-sm-6">
-                            <#select id="status" name="状态" underline="true">
-                                <option value="0">未使用</option>
-                                <option value="1">已使用</option>
-                            </#select>
-                            <#input id="createTime" name="创建时间" value="${item.createTime}" underline="true" readonly="readonly"/>
-                            <#input id="updateTime" name="更新时间" value="${item.updateTime}" readonly="readonly"/>
+                    <#input id="orderId" name="订单id" value="${item.orderId}" underline="true" readonly="readonly"/>
+
+                    <#select id="status" name="状态" underline="true" value="${item.status}">
+                        <option value="0">未使用</option>
+                        <option value="1">已使用</option>
+                    </#select>
+
+                    <#input id="createTime" name="创建时间" value="${item.createTime}" underline="true" readonly="readonly"/>
+                    <#input id="updateTime" name="更新时间" value="${item.updateTime}" readonly="readonly"/>
                 </div>
             </div>
 
