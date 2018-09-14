@@ -39,7 +39,7 @@ public class ${context.bizEnBigName}Controller extends BaseController {
      * 跳转到修改${context.bizChName}
      */
     @RequestMapping("/${context.bizEnName}_update/{${context.bizEnName}Id}")
-    public String ${context.bizEnName}Update(@PathVariable Integer ${context.bizEnName}Id, Model model) {
+    public String ${context.bizEnName}Update(@PathVariable String ${context.bizEnName}Id, Model model) {
         ${context.entityName} ${context.bizEnName} = ${context.bizEnName}Service.selectById(${context.bizEnName}Id);
         model.addAttribute("item",${context.bizEnName});
         LogObjectHolder.me().set(${context.bizEnName});
@@ -70,7 +70,7 @@ public class ${context.bizEnBigName}Controller extends BaseController {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Object delete(@RequestParam Integer ${context.bizEnName}Id) {
+    public Object delete(@RequestParam String ${context.bizEnName}Id) {
         ${context.bizEnName}Service.deleteById(${context.bizEnName}Id);
         return SUCCESS_TIP;
     }
@@ -90,7 +90,7 @@ public class ${context.bizEnBigName}Controller extends BaseController {
      */
     @RequestMapping(value = "/detail/{${context.bizEnName}Id}")
     @ResponseBody
-    public Object detail(@PathVariable("${context.bizEnName}Id") Integer ${context.bizEnName}Id) {
+    public Object detail(@PathVariable("${context.bizEnName}Id") String ${context.bizEnName}Id) {
         return ${context.bizEnName}Service.selectById(${context.bizEnName}Id);
     }
 }

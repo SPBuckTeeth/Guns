@@ -59,7 +59,7 @@ public class NoticeController extends BaseController {
      * 跳转到修改通知
      */
     @RequestMapping("/notice_update/{noticeId}")
-    public String noticeUpdate(@PathVariable Integer noticeId, Model model) {
+    public String noticeUpdate(@PathVariable String noticeId, Model model) {
         Notice notice = this.noticeService.selectById(noticeId);
         model.addAttribute("notice",notice);
         LogObjectHolder.me().set(notice);
@@ -108,7 +108,7 @@ public class NoticeController extends BaseController {
     @RequestMapping(value = "/delete")
     @ResponseBody
     @BussinessLog(value = "删除通知",key = "noticeId",dict = NoticeMap.class)
-    public Object delete(@RequestParam Integer noticeId) {
+    public Object delete(@RequestParam String noticeId) {
 
         //缓存通知名称
         LogObjectHolder.me().set(ConstantFactory.me().getNoticeTitle(noticeId));
