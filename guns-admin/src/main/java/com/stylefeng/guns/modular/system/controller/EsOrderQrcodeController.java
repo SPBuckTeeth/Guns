@@ -47,7 +47,7 @@ public class EsOrderQrcodeController extends BaseController {
      * 跳转到修改二维码生成
      */
     @RequestMapping("/esOrderQrcode_update/{esOrderQrcodeId}")
-    public String esOrderQrcodeUpdate(@PathVariable Integer esOrderQrcodeId, Model model) {
+    public String esOrderQrcodeUpdate(@PathVariable String esOrderQrcodeId, Model model) {
         EsOrderQrcode esOrderQrcode = esOrderQrcodeService.selectById(esOrderQrcodeId);
         model.addAttribute("item",esOrderQrcode);
         LogObjectHolder.me().set(esOrderQrcode);
@@ -78,7 +78,7 @@ public class EsOrderQrcodeController extends BaseController {
      */
     @RequestMapping(value = "/delete")
     @ResponseBody
-    public Object delete(@RequestParam Integer esOrderQrcodeId) {
+    public Object delete(@RequestParam String esOrderQrcodeId) {
         esOrderQrcodeService.deleteById(esOrderQrcodeId);
         return SUCCESS_TIP;
     }
@@ -98,7 +98,7 @@ public class EsOrderQrcodeController extends BaseController {
      */
     @RequestMapping(value = "/detail/{esOrderQrcodeId}")
     @ResponseBody
-    public Object detail(@PathVariable("esOrderQrcodeId") Integer esOrderQrcodeId) {
+    public Object detail(@PathVariable("esOrderQrcodeId") String esOrderQrcodeId) {
         return esOrderQrcodeService.selectById(esOrderQrcodeId);
     }
 }

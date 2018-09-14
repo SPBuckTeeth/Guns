@@ -23,12 +23,12 @@ public interface IDictService extends IService<Dict> {
     /**
      * 编辑字典
      */
-    void editDict(Integer dictId,String dictCode, String dictName,String dictTips, String dicts);
+    void editDict(String dictId,String dictCode, String dictName,String dictTips, String dicts);
 
     /**
      * 删除字典
      */
-    void delteDict(Integer dictId);
+    void delteDict(String dictId);
 
     /**
      * 根据编码获取词典列表

@@ -5,6 +5,10 @@
 
             <div class="row">
                 <div class="col-sm-6 b-r">
+                    <label class="col-md-3 col-sm-3 control-label">二维码图片:</label>
+                    <a href="${item.qrcode}" target="_blank">
+                        <img src="${item.qrcode}" class="img-circle message-avatar" style="width: 120px;height:120px;"/>
+                    </a>
                             <#input id="id" name="id" value="${item.id}" underline="true"/>
                             <#input id="batch" name="批次" value="${item.batch}" underline="true"/>
                             <#input id="qrcode" name="二维码图片url" value="${item.qrcode}" underline="true"/>

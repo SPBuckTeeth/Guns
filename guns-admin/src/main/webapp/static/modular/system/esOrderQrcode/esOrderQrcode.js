@@ -14,11 +14,20 @@ var EsOrderQrcode = {
 EsOrderQrcode.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+            {title: '二维码', field: 'qrcode', visible: true, align: 'center', valign: 'middle',formatter: function (value, row, index) {
+                return '<a href="'+value+'" target="_blank">\n' +
+                    '<img src="'+value+'" style="width: 40px;height:40px;"/></a>'
+            }},
             {title: '批次', field: 'batch', visible: true, align: 'center', valign: 'middle'},
-            {title: '二维码图片url', field: 'qrcode', visible: true, align: 'center', valign: 'middle'},
             {title: '订单id', field: 'orderId', visible: true, align: 'center', valign: 'middle'},
-            {title: '状态(0:未使用 1:已使用)', field: 'status', visible: true, align: 'center', valign: 'middle'},
+            {title: '状态(0:未使用 1:已使用)', field: 'status', visible: true, align: 'center', valign: 'middle',formatter: function (value, row, index) {
+                if(value == 1) {
+                    return "已使用";
+                } else {
+                    return "未使用";
+                }
+            }},
             {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
             {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle'}
     ];

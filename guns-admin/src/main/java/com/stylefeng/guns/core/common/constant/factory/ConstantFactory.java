@@ -48,7 +48,7 @@ public class ConstantFactory implements IConstantFactory {
      * @Date 2017/5/9 23:41
      */
     @Override
-    public String getUserNameById(Integer userId) {
+    public String getUserNameById(String userId) {
         User user = userMapper.selectById(userId);
         if (user != null) {
             return user.getName();
@@ -64,7 +64,7 @@ public class ConstantFactory implements IConstantFactory {
      * @date 2017年5月16日21:55:371
      */
     @Override
-    public String getUserAccountById(Integer userId) {
+    public String getUserAccountById(String userId) {
         User user = userMapper.selectById(userId);
         if (user != null) {
             return user.getAccount();
@@ -95,8 +95,8 @@ public class ConstantFactory implements IConstantFactory {
      */
     @Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_ROLE_NAME + "'+#roleId")
-    public String getSingleRoleName(Integer roleId) {
-        if (0 == roleId) {
+    public String getSingleRoleName(String roleId) {
+        if ("0".equals(roleId)) {
             return "--";
         }
         Role roleObj = roleMapper.selectById(roleId);
@@ -111,8 +111,8 @@ public class ConstantFactory implements IConstantFactory {
      */
     @Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.SINGLE_ROLE_TIP + "'+#roleId")
-    public String getSingleRoleTip(Integer roleId) {
-        if (0 == roleId) {
+    public String getSingleRoleTip(String roleId) {
+        if ("0".equals(roleId)) {
             return "--";
         }
         Role roleObj = roleMapper.selectById(roleId);
@@ -127,7 +127,7 @@ public class ConstantFactory implements IConstantFactory {
      */
     @Override
     @Cacheable(value = Cache.CONSTANT, key = "'" + CacheKey.DEPT_NAME + "'+#deptId")
-    public String getDeptName(Integer deptId) {
+    public String getDeptName(String deptId) {
         Dept dept = deptMapper.selectById(deptId);
         if (ToolUtil.isNotEmpty(dept) && ToolUtil.isNotEmpty(dept.getFullname())) {
             return dept.getFullname();
@@ -155,7 +155,7 @@ public class ConstantFactory implements IConstantFactory {
      * 获取菜单名称
      */
     @Override
-    public String getMenuName(Long menuId) {
+    public String getMenuName(String menuId) {
         if (ToolUtil.isEmpty(menuId)) {
             return "";
         } else {
@@ -191,7 +191,7 @@ public class ConstantFactory implements IConstantFactory {
      * 获取字典名称
      */
     @Override
-    public String getDictName(Integer dictId) {
+    public String getDictName(String dictId) {
         if (ToolUtil.isEmpty(dictId)) {
             return "";
         } else {
@@ -208,7 +208,7 @@ public class ConstantFactory implements IConstantFactory {
      * 获取通知标题
      */
     @Override
-    public String getNoticeTitle(Integer dictId) {
+    public String getNoticeTitle(String dictId) {
         if (ToolUtil.isEmpty(dictId)) {
             return "";
         } else {
@@ -272,7 +272,7 @@ public class ConstantFactory implements IConstantFactory {
      * 查询字典
      */
     @Override
-    public List<Dict> findInDict(Integer id) {
+    public List<Dict> findInDict(String id) {
         if (ToolUtil.isEmpty(id)) {
             return null;
         } else {
@@ -298,12 +298,12 @@ public class ConstantFactory implements IConstantFactory {
      * 获取子部门id
      */
     @Override
-    public List<Integer> getSubDeptId(Integer deptid) {
+    public List<String> getSubDeptId(String deptid) {
         Wrapper<Dept> wrapper = new EntityWrapper<>();
         wrapper = wrapper.like("pids", "%[" + deptid + "]%");
         List<Dept> depts = this.deptMapper.selectList(wrapper);
 
-        ArrayList<Integer> deptids = new ArrayList<>();
+        ArrayList<String> deptids = new ArrayList<>();
 
         if(depts != null && depts.size() > 0){
             for (Dept dept : depts) {
@@ -318,13 +318,13 @@ public class ConstantFactory implements IConstantFactory {
      * 获取所有父部门id
      */
     @Override
-    public List<Integer> getParentDeptIds(Integer deptid) {
+    public List<String> getParentDeptIds(String deptid) {
         Dept dept = deptMapper.selectById(deptid);
         String pids = dept.getPids();
         String[] split = pids.split(",");
-        ArrayList<Integer> parentDeptIds = new ArrayList<>();
+        ArrayList<String> parentDeptIds = new ArrayList<>();
         for (String s : split) {
-            parentDeptIds.add(Integer.valueOf(StrKit.removeSuffix(StrKit.removePrefix(s, "["), "]")));
+            parentDeptIds.add(StrKit.removeSuffix(StrKit.removePrefix(s, "["), "]"));
         }
         return parentDeptIds;
     }

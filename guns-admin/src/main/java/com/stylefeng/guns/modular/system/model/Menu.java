@@ -24,8 +24,8 @@ public class Menu extends Model<Menu> {
     /**
      * 主键id
      */
-    @TableId(value = "id", type = IdType.AUTO)
-    private Long id;
+    @TableId(value = "id", type = IdType.UUID)
+    private String id;
     /**
      * 菜单编号
      */
@@ -78,11 +78,11 @@ public class Menu extends Model<Menu> {
     private Integer isopen;
 
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 

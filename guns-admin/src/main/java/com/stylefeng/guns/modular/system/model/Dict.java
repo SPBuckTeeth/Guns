@@ -24,8 +24,8 @@ public class Dict extends Model<Dict> {
 	/**
 	 * 主键id
 	 */
-	@TableId(value="id", type= IdType.AUTO)
-	private Integer id;
+	@TableId(value="id", type= IdType.UUID)
+	private String id;
 	/**
 	 * 排序
 	 */
@@ -33,7 +33,7 @@ public class Dict extends Model<Dict> {
 	/**
 	 * 父级字典
 	 */
-	private Integer pid;
+	private String pid;
 	/**
 	 * 名称
 	 */
@@ -49,11 +49,11 @@ public class Dict extends Model<Dict> {
 	private String tips;
 
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -65,11 +65,11 @@ public class Dict extends Model<Dict> {
 		this.num = num;
 	}
 
-	public Integer getPid() {
+	public String getPid() {
 		return pid;
 	}
 
-	public void setPid(Integer pid) {
+	public void setPid(String pid) {
 		this.pid = pid;
 	}
 
