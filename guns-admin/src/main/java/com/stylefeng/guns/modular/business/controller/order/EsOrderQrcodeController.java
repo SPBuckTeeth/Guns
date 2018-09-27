@@ -1,4 +1,4 @@
-package com.stylefeng.guns.modular.system.controller;
+package com.stylefeng.guns.modular.business.controller.order;
 
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
@@ -19,8 +19,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
-import com.stylefeng.guns.modular.system.model.EsOrderQrcode;
-import com.stylefeng.guns.modular.system.service.IEsOrderQrcodeService;
+import com.stylefeng.guns.modular.business.model.order.EsOrderQrcode;
+import com.stylefeng.guns.modular.business.service.order.IEsOrderQrcodeService;
 
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
@@ -44,7 +44,7 @@ import java.util.List;
 public class EsOrderQrcodeController extends BaseController {
     private static final Logger logger = Logger.getLogger(EsOrderQrcodeController.class);
 
-    private String PREFIX = "/system/esOrderQrcode/";
+    private String PREFIX = "/business/order/esOrderQrcode/";
 
     @Autowired
     private IEsOrderQrcodeService esOrderQrcodeService;
