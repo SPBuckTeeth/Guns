@@ -58,7 +58,7 @@ EsOrderQrcodeInfoDlg.collectData = function() {
 EsOrderQrcodeInfoDlg.addSubmit = function() {
 
     this.clearData();
-    this.collectData();
+    this.set('qrcodeNum');
 
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/esOrderQrcode/add", function(data){

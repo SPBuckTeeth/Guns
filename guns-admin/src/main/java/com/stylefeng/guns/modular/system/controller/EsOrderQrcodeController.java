@@ -3,12 +3,14 @@ package com.stylefeng.guns.modular.system.controller;
 import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
 import com.stylefeng.guns.core.common.constant.factory.PageFactory;
-import com.stylefeng.guns.core.common.constant.state.BizLogType;
+import com.stylefeng.guns.core.common.exception.BasicExceptionEnum;
+import com.stylefeng.guns.core.exception.GunsException;
+import com.stylefeng.guns.core.util.CommonUtils;
 import com.stylefeng.guns.core.util.Contant;
-import com.stylefeng.guns.modular.system.model.OperationLog;
-import com.stylefeng.guns.modular.system.warpper.EsOrderQrcodeWarpper;
-import com.stylefeng.guns.modular.system.warpper.LogWarpper;
+import com.stylefeng.guns.core.util.FontUpQiniu;
+import com.stylefeng.guns.core.util.QrcodeUtil;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,8 +22,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.system.model.EsOrderQrcode;
 import com.stylefeng.guns.modular.system.service.IEsOrderQrcodeService;
 
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 /**
  * 二维码生成控制器
@@ -32,6 +42,7 @@ import java.util.Map;
 @Controller
 @RequestMapping("/esOrderQrcode")
 public class EsOrderQrcodeController extends BaseController {
+    private static final Logger logger = Logger.getLogger(EsOrderQrcodeController.class);
 
     private String PREFIX = "/system/esOrderQrcode/";
 
@@ -96,8 +107,21 @@ public class EsOrderQrcodeController extends BaseController {
      */
     @RequestMapping(value = "/add")
     @ResponseBody
-    public Object add(EsOrderQrcode esOrderQrcode) {
-        esOrderQrcodeService.insert(esOrderQrcode);
+    public Object add(String qrcodeNum, HttpServletRequest request) {
+        if(StringUtils.isBlank(qrcodeNum)) {
+            throw new GunsException(BasicExceptionEnum.NULL_NUM);
+        }
+        int num;
+        try {
+            num = Integer.parseInt(qrcodeNum);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new GunsException(BasicExceptionEnum.ERROR_PATTERN);
+        }
+
+        String batch = qrcodeFactory(num, request);
+
+
         return SUCCESS_TIP;
     }
 
@@ -129,4 +153,69 @@ public class EsOrderQrcodeController extends BaseController {
     public Object detail(@PathVariable("esOrderQrcodeId") String esOrderQrcodeId) {
         return esOrderQrcodeService.selectById(esOrderQrcodeId);
     }
+
+    /**
+     * 批量生成二维码
+     * @param num 数量
+     */
+    private String qrcodeFactory(int num, HttpServletRequest request) {
+        Date d = new Date();
+        String batch = "ORDERQRCODE" + d.getTime();
+        String qrcode;
+        String id;
+        List<EsOrderQrcode> orderQrcodeList = new ArrayList<>();
+        //OutputStream os = null;
+        ByteArrayOutputStream bos = null;
+        try {
+
+            for(int i = 0; i < num; i ++) {
+                id = CommonUtils.randomID();
+                EsOrderQrcode orderQrcode = new EsOrderQrcode();
+                orderQrcode.setId(id);
+                orderQrcode.setBatch(batch);
+                orderQrcode.setStatus(0);
+                orderQrcode.setCreateTime(d);
+                orderQrcode.setUpdateTime(d);
+
+                //动态地址
+                //String qrURL = String.format("http://%s:%s%s%s%s", request.getServerName(), "80", request.getContextPath(), "/orderQrcode/scanOrderQrcode?qrcodeId=", id);
+                //生产地址
+                String qrURL = "https://fast.mrcargo.com/app-api/orderQrcode/scanOrderQrcode?qrcodeId="+id;
+                //本地地址
+                //String qrURL = String.format("http://%s:%s%s%s%s", "192.168.1.31", "8489", request.getContextPath(), "/orderQrcode/scanOrderQrcode?qrcodeId=", id);
+                logger.debug("###### [生成二维码]qrURL === [ " + qrURL + " ] ######");
+
+                //生成图片
+                BufferedImage qrcodeImg = QrcodeUtil.encodeQrWebImg(qrURL, true);
+
+                //二维码图片转inputStream上传七牛
+                bos = new ByteArrayOutputStream();
+                ImageIO.write(qrcodeImg, "jpg", bos);
+                InputStream qrcodeStream = new ByteArrayInputStream(bos.toByteArray());
+                qrcode = FontUpQiniu.streamUpQiniu(qrcodeStream);
+                orderQrcode.setQrcode(qrcode);
+                orderQrcodeList.add(orderQrcode);
+            }
+
+            if(orderQrcodeList.size() > 0) {
+                //保存空白二维码到数据库
+                esOrderQrcodeService.insertBatch(orderQrcodeList);
+            }
+
+        } catch (Exception e) {
+            logger.debug("###### [生成二维码]getBarCode error  ######");
+            e.printStackTrace();
+        } finally {
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return batch;
+    }
+
 }
