@@ -1,7 +1,11 @@
 package com.stylefeng.guns.modular.system.dao;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.modular.system.model.EsOrderQrcode;
 import com.baomidou.mybatisplus.mapper.BaseMapper;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -13,4 +17,7 @@ import com.baomidou.mybatisplus.mapper.BaseMapper;
  */
 public interface EsOrderQrcodeMapper extends BaseMapper<EsOrderQrcode> {
 
+    List<EsOrderQrcode> selectListPro();
+
+    List<EsOrderQrcode> getEsOrderQrcode(Page<EsOrderQrcode> page);
 }

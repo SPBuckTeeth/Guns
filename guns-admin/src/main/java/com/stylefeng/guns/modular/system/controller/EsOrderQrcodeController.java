@@ -1,6 +1,14 @@
 package com.stylefeng.guns.modular.system.controller;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.common.constant.state.BizLogType;
+import com.stylefeng.guns.core.util.Contant;
+import com.stylefeng.guns.modular.system.model.OperationLog;
+import com.stylefeng.guns.modular.system.warpper.EsOrderQrcodeWarpper;
+import com.stylefeng.guns.modular.system.warpper.LogWarpper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,6 +21,7 @@ import com.stylefeng.guns.modular.system.model.EsOrderQrcode;
 import com.stylefeng.guns.modular.system.service.IEsOrderQrcodeService;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * 二维码生成控制器
@@ -62,8 +71,24 @@ public class EsOrderQrcodeController extends BaseController {
     @RequestMapping(value = "/list")
     @ResponseBody
     public Object list(String condition) {
-        List<EsOrderQrcode> list = esOrderQrcodeService.selectList(null);
-        return list;
+//        Page<OperationLog> page = new PageFactory<OperationLog>().defaultPage();
+//        List<Map<String, Object>> result = operationLogService.getOperationLogs(page, beginTime, endTime, logName, BizLogType.valueOf(logType), page.getOrderByField(), page.isAsc());
+//        page.setRecords((List<OperationLog>) new LogWarpper(result).warp());
+//        return super.packForBT(page);
+
+        Page<EsOrderQrcode> page = new PageFactory<EsOrderQrcode>().defaultPage();
+        String orderByField = page.getOrderByField();
+        if(!StringUtils.isBlank(orderByField)) {
+            orderByField = Contant.commonStringUtil(orderByField);
+            page.setOrderByField(orderByField);
+        }
+        List<EsOrderQrcode> result = esOrderQrcodeService.getEsOrderQrcode(page);
+        page.setRecords(result);
+        return super.packForBT(page);
+
+        //List<EsOrderQrcode> list = esOrderQrcodeService.selectList(null);
+        //List<EsOrderQrcode> list = esOrderQrcodeService.selectListPro();
+        //return list;
     }
 
     /**
