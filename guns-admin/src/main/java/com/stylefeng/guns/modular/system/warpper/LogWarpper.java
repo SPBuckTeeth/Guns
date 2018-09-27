@@ -23,7 +23,7 @@ public class LogWarpper extends BaseControllerWarpper {
     public void warpTheMap(Map<String, Object> map) {
         String message = (String) map.get("message");
 
-        Integer userid = (Integer) map.get("userid");
+        String userid = (String) map.get("userid");
         map.put("userName", ConstantFactory.me().getUserNameById(userid));
 
         //如果信息过长,则只截取前100位字符串

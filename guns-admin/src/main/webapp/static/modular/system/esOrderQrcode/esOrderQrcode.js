@@ -14,13 +14,22 @@ var EsOrderQrcode = {
 EsOrderQrcode.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},
+            {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+            {title: '二维码', field: 'qrcode', visible: true, align: 'center', valign: 'middle',formatter: function (value, row, index) {
+                return '<a href="'+value+'" target="_blank">\n' +
+                    '<img src="'+value+'" style="width: 40px;height:40px;"/></a>'
+            }},
             {title: '批次', field: 'batch', visible: true, align: 'center', valign: 'middle'},
-            {title: '二维码图片url', field: 'qrcode', visible: true, align: 'center', valign: 'middle'},
             {title: '订单id', field: 'orderId', visible: true, align: 'center', valign: 'middle'},
-            {title: '状态(0:未使用 1:已使用)', field: 'status', visible: true, align: 'center', valign: 'middle'},
-            {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle'}
+            {title: '状态', field: 'status', visible: true, align: 'center', valign: 'middle',formatter: function (value, row, index) {
+                if(value == 1) {
+                    return "已使用";
+                } else {
+                    return "未使用";
+                }
+            }, sortable: true},
+            {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle', sortable: true},
+            {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle', sortable: true}
     ];
 };
 
@@ -87,17 +96,31 @@ EsOrderQrcode.delete = function () {
 };
 
 /**
+ * 查询表单提交参数对象
+ * @returns {{}}
+ */
+EsOrderQrcode.formParams = function() {
+    var queryData = {};
+
+    return queryData;
+}
+
+/**
  * 查询二维码生成列表
  */
 EsOrderQrcode.search = function () {
-    var queryData = {};
-    queryData['condition'] = $("#condition").val();
-    EsOrderQrcode.table.refresh({query: queryData});
+    // var queryData = {};
+    // queryData['condition'] = $("#condition").val();
+    // EsOrderQrcode.table.refresh({query: queryData});
+    EsOrderQrcode.table.refresh({query: EsOrderQrcode.formParams()});
 };
 
 $(function () {
     var defaultColunms = EsOrderQrcode.initColumn();
     var table = new BSTable(EsOrderQrcode.id, "/esOrderQrcode/list", defaultColunms);
-    table.setPaginationType("client");
+    // table.setPaginationType("client");
+    // EsOrderQrcode.table = table.init();
+    table.setPaginationType("server");
+    table.setQueryParams(EsOrderQrcode.formParams());
     EsOrderQrcode.table = table.init();
 });

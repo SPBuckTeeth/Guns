@@ -3,7 +3,10 @@ package com.stylefeng.guns.modular.system.model;
 import java.util.Date;
 import com.baomidou.mybatisplus.annotations.TableField;
 import com.baomidou.mybatisplus.activerecord.Model;
+import com.baomidou.mybatisplus.annotations.TableId;
 import com.baomidou.mybatisplus.annotations.TableName;
+import com.baomidou.mybatisplus.enums.IdType;
+
 import java.io.Serializable;
 
 /**
@@ -22,6 +25,7 @@ public class EsOrderQrcode extends Model<EsOrderQrcode> {
     /**
      * id
      */
+    @TableId(value ="id", type = IdType.UUID)
     private String id;
     /**
      * 批次

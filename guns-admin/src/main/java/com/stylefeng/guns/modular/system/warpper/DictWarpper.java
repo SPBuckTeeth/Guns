@@ -23,7 +23,7 @@ public class DictWarpper extends BaseControllerWarpper {
     @Override
     public void warpTheMap(Map<String, Object> map) {
         StringBuffer detail = new StringBuffer();
-        Integer id = Integer.valueOf(map.get("id").toString());
+        String id = map.get("id").toString();
         List<Dict> dicts = ConstantFactory.me().findInDict(id);
         if(dicts != null){
             for (Dict dict : dicts) {

@@ -21,12 +21,12 @@ public interface Const {
     /**
      * 管理员id
      */
-    Integer ADMIN_ID = 1;
+    String ADMIN_ID = "1";
 
     /**
      * 超级管理员角色id
      */
-    Integer ADMIN_ROLE_ID = 1;
+    String ADMIN_ROLE_ID = "1";
 
     /**
      * 接口文档的菜单名

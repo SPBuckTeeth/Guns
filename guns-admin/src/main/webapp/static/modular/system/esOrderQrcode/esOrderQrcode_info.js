@@ -49,9 +49,7 @@ EsOrderQrcodeInfoDlg.collectData = function() {
     .set('batch')
     .set('qrcode')
     .set('orderId')
-    .set('status')
-    .set('createTime')
-    .set('updateTime');
+    .set('status');
 }
 
 /**
@@ -95,5 +93,6 @@ EsOrderQrcodeInfoDlg.editSubmit = function() {
 }
 
 $(function() {
-
+    //初始化状态选项
+    $("#status").val($("#statusValue").val());
 });

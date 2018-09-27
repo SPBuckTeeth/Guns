@@ -41,7 +41,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
         dict.setCode(dictCode);
         dict.setTips(dictTips);
         dict.setNum(0);
-        dict.setPid(0);
+        dict.setPid("0");
         this.dictMapper.insert(dict);
 
         //添加字典条目
@@ -64,7 +64,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     }
 
     @Override
-    public void editDict(Integer dictId,String dictCode, String dictName,String dictTips, String dicts) {
+    public void editDict(String dictId,String dictCode, String dictName,String dictTips, String dicts) {
         //删除之前的字典
         this.delteDict(dictId);
 
@@ -73,7 +73,7 @@ public class DictServiceImpl extends ServiceImpl<DictMapper, Dict> implements ID
     }
 
     @Override
-    public void delteDict(Integer dictId) {
+    public void delteDict(String dictId) {
         //删除这个字典的子词典
         Wrapper<Dict> dictEntityWrapper = new EntityWrapper<>();
         dictEntityWrapper = dictEntityWrapper.eq("pid", dictId);
