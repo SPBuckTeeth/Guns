@@ -18,4 +18,37 @@
         id, batch, qrcode, order_id, status, create_time, update_time
     </sql>
 
+    <select id="selectListPro" resultMap="BaseResultMap">
+        SELECT * FROM es_order_qrcode
+        ORDER BY update_time DESC
+    </select>
+
+    <select id="getEsOrderQrcode" resultMap="BaseResultMap">
+        select * from es_order_qrcode where 1 = 1
+        <if test="beginTime != null and beginTime !='' and endTime != null and endTime != ''">
+            and (createTime between CONCAT(#{beginTime},' 00:00:00') and CONCAT(#{endTime},' 23:59:59'))
+        </if>
+        <if test="batch != null and batch !=''">
+            and batch like CONCAT('%',#{batch},'%')
+        </if>
+        <if test="status != null and status !=''">
+            and status = #{logType}
+        </if>
+        <choose>
+            <when test="orderByField != null and orderByField !=''">
+                <choose>
+                    <when test="isAsc == true">
+                        order by ${orderByField} ASC
+                    </when>
+                    <otherwise>
+                        order by ${orderByField} DESC
+                    </otherwise>
+                </choose>
+            </when>
+            <otherwise>
+                order by update_time DESC
+            </otherwise>
+        </choose>
+    </select>
+
 </mapper>
