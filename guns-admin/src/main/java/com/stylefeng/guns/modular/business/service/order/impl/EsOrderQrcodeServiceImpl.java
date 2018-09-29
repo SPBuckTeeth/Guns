@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -24,12 +25,12 @@ public class EsOrderQrcodeServiceImpl extends ServiceImpl<EsOrderQrcodeMapper, E
     private EsOrderQrcodeMapper esOrderQrcodeMapper;
 
     @Override
-    public List<EsOrderQrcode> selectListPro() {
-        return esOrderQrcodeMapper.selectListPro();
+    public List<EsOrderQrcode> getEsOrderQrcode(Page<EsOrderQrcode> page) {
+        return esOrderQrcodeMapper.getEsOrderQrcode(page);
     }
 
     @Override
-    public List<EsOrderQrcode> getEsOrderQrcode(Page<EsOrderQrcode> page) {
-        return esOrderQrcodeMapper.getEsOrderQrcode(page);
+    public List<EsOrderQrcode> getEsOrderQrcode2(Page<EsOrderQrcode> page, String beginTime, String endTime, String batch, String orderId, String status, String orderByField, boolean asc) {
+        return this.baseMapper.getEsOrderQrcode2(page, beginTime, endTime, batch, orderId, status, orderByField, asc);
     }
 }

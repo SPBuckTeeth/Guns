@@ -96,31 +96,21 @@ EsOrderQrcode.delete = function () {
 };
 
 /**
- * 查询表单提交参数对象
- * @returns {{}}
- */
-EsOrderQrcode.formParams = function() {
-    var queryData = {};
-
-    return queryData;
-}
-
-/**
  * 查询二维码生成列表
  */
 EsOrderQrcode.search = function () {
-    // var queryData = {};
-    // queryData['condition'] = $("#condition").val();
-    // EsOrderQrcode.table.refresh({query: queryData});
-    EsOrderQrcode.table.refresh({query: EsOrderQrcode.formParams()});
+    var queryData = {};
+
+    queryData['batch'] = $("#batch").val();
+    queryData['orderId'] = $("#orderId").val();
+    queryData['status'] = $("#status").val();
+    EsOrderQrcode.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = EsOrderQrcode.initColumn();
     var table = new BSTable(EsOrderQrcode.id, "/esOrderQrcode/list", defaultColunms);
-    // table.setPaginationType("client");
-    // EsOrderQrcode.table = table.init();
     table.setPaginationType("server");
-    table.setQueryParams(EsOrderQrcode.formParams());
     EsOrderQrcode.table = table.init();
 });
+

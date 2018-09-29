@@ -9,6 +9,7 @@ import com.stylefeng.guns.core.util.CommonUtils;
 import com.stylefeng.guns.core.util.Contant;
 import com.stylefeng.guns.core.util.FontUpQiniu;
 import com.stylefeng.guns.core.util.QrcodeUtil;
+import com.stylefeng.guns.modular.system.warpper.LogWarpper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -32,6 +33,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 二维码生成控制器
@@ -76,16 +78,43 @@ public class EsOrderQrcodeController extends BaseController {
         return PREFIX + "esOrderQrcode_edit.html";
     }
 
+//    /**
+//     * 获取二维码生成列表
+//     */
+//    @RequestMapping(value = "/list")
+//    @ResponseBody
+//    public Object list(@RequestParam(required = false) String batch,
+//                       @RequestParam(required = false) String orderId,
+//                       @RequestParam(required = false) String status,
+//                       HttpServletRequest request) {
+////        Page<OperationLog> page = new PageFactory<OperationLog>().defaultPage();
+////        List<Map<String, Object>> result = operationLogService.getOperationLogs(page, beginTime, endTime, logName, BizLogType.valueOf(logType), page.getOrderByField(), page.isAsc());
+////        page.setRecords((List<OperationLog>) new LogWarpper(result).warp());
+////        return super.packForBT(page);
+//
+//        //Map<String, Object> params = getPageMapControl(request);
+//
+//        Page<EsOrderQrcode> page = new PageFactory<EsOrderQrcode>().defaultPage();
+//        String orderByField = page.getOrderByField();
+//        if(!StringUtils.isBlank(orderByField)) {
+//            orderByField = Contant.commonStringUtil(orderByField);
+//            page.setOrderByField(orderByField);
+//        }
+//        List<EsOrderQrcode> result = esOrderQrcodeService.getEsOrderQrcode(page);
+//        page.setRecords(result);
+//        return super.packForBT(page);
+//    }
+
     /**
      * 获取二维码生成列表
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-//        Page<OperationLog> page = new PageFactory<OperationLog>().defaultPage();
-//        List<Map<String, Object>> result = operationLogService.getOperationLogs(page, beginTime, endTime, logName, BizLogType.valueOf(logType), page.getOrderByField(), page.isAsc());
-//        page.setRecords((List<OperationLog>) new LogWarpper(result).warp());
-//        return super.packForBT(page);
+    public Object list(@RequestParam(required = false) String beginTime,
+                       @RequestParam(required = false) String endTime,
+                       @RequestParam(required = false) String batch,
+                       @RequestParam(required = false) String orderId,
+                       @RequestParam(required = false) String status) {
 
         Page<EsOrderQrcode> page = new PageFactory<EsOrderQrcode>().defaultPage();
         String orderByField = page.getOrderByField();
@@ -93,13 +122,10 @@ public class EsOrderQrcodeController extends BaseController {
             orderByField = Contant.commonStringUtil(orderByField);
             page.setOrderByField(orderByField);
         }
-        List<EsOrderQrcode> result = esOrderQrcodeService.getEsOrderQrcode(page);
+
+        List<EsOrderQrcode> result = esOrderQrcodeService.getEsOrderQrcode2(page, beginTime, endTime, batch, orderId, status, page.getOrderByField(), page.isAsc());
         page.setRecords(result);
         return super.packForBT(page);
-
-        //List<EsOrderQrcode> list = esOrderQrcodeService.selectList(null);
-        //List<EsOrderQrcode> list = esOrderQrcodeService.selectListPro();
-        //return list;
     }
 
     /**
