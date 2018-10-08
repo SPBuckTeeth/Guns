@@ -9,7 +9,6 @@ import com.stylefeng.guns.core.util.CommonUtils;
 import com.stylefeng.guns.core.util.Contant;
 import com.stylefeng.guns.core.util.FontUpQiniu;
 import com.stylefeng.guns.core.util.QrcodeUtil;
-import com.stylefeng.guns.modular.system.warpper.LogWarpper;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
@@ -38,7 +37,7 @@ import java.util.Map;
 /**
  * 二维码生成控制器
  *
- * @author fengshuonan
+ * @author lossdate
  * @Date 2018-09-12 15:24:41
  */
 @Controller

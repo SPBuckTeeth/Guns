@@ -1,0 +1,33 @@
+@layout("/common/_container.html"){
+<div class="ibox float-e-margins">
+    <div class="ibox-content">
+        <div class="form-horizontal">
+
+            <div class="row">
+                <div class="col-sm-6 b-r">
+                            <#input id="id" name="id" value="${item.id}" underline="true"/>
+                            <#input id="enterpriseName" name="产品名" value="${item.enterpriseName}" underline="true"/>
+                            <#input id="servicePlatform" name="服务平台" value="${item.servicePlatform}" underline="true"/>
+                            <#input id="createTime" name="创建时间" value="${item.createTime}" />
+                </div>
+
+                <div class="col-sm-6">
+                            <#input id="updateTime" name="更新时间" value="${item.updateTime}" underline="true"/>
+                            <#input id="status" name="0：有效，1：无效" value="${item.status}" underline="true"/>
+                            <#input id="logo" name="产品logo" value="${item.logo}" underline="true"/>
+                            <#input id="intro" name="产品简介" value="${item.intro}" />
+                </div>
+            </div>
+
+            <div class="row btn-group-m-t">
+                <div class="col-sm-10">
+                    <#button btnCss="info" name="提交" id="ensure" icon="fa-check" clickFun="ProductInfoDlg.editSubmit()"/>
+                    <#button btnCss="danger" name="取消" id="cancel" icon="fa-eraser" clickFun="ProductInfoDlg.close()"/>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="${ctxPath}/static/modular/sysproduct/product/product_info.js"></script>
+@}
