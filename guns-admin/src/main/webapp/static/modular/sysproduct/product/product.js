@@ -14,14 +14,23 @@ var Product = {
 Product.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},
-            {title: '产品名', field: 'enterpriseName', visible: true, align: 'center', valign: 'middle'},
-            {title: '服务平台', field: 'servicePlatform', visible: true, align: 'center', valign: 'middle'},
+            {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+            {title: '产品logo', field: 'logo', visible: true, align: 'center', valign: 'middle',formatter: function (value, row, index) {
+                return '<a href="'+value+'" target="_blank">\n' +
+                    '<img src="'+value+'" style="width: 40px;height:40px;"/></a>'
+            }},
+            {title: '产品名称', field: 'enterpriseName', visible: true, align: 'center', valign: 'middle'},
+            {title: '产品代码', field: 'servicePlatform', visible: true, align: 'center', valign: 'middle'},
+            {title: '产品简介', field: 'intro', visible: true, align: 'center', valign: 'middle'},
+            {title: '状态', field: 'status', visible: true, align: 'center', valign: 'middle',formatter: function (value, row, index) {
+                if(value == 1) {
+                    return "无效";
+                } else {
+                    return "有效";
+                }
+            }, sortable: true},
             {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle'},
-            {title: '0：有效，1：无效', field: 'status', visible: true, align: 'center', valign: 'middle'},
-            {title: '产品logo', field: 'logo', visible: true, align: 'center', valign: 'middle'},
-            {title: '产品简介', field: 'intro', visible: true, align: 'center', valign: 'middle'}
+            {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle'}
     ];
 };
 
@@ -92,13 +101,17 @@ Product.delete = function () {
  */
 Product.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['enterpriseName'] = $("#enterpriseName").val();
+    queryData['servicePlatform'] = $("#servicePlatform").val();
+    queryData['status'] = $("#status").val();
     Product.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = Product.initColumn();
     var table = new BSTable(Product.id, "/product/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     Product.table = table.init();
 });
+
+

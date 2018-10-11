@@ -1,10 +1,14 @@
 package com.stylefeng.guns.modular.sysproduct.service.impl;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.modular.sysproduct.model.Product;
 import com.stylefeng.guns.modular.sysproduct.dao.ProductMapper;
 import com.stylefeng.guns.modular.sysproduct.service.IProductService;
 import com.baomidou.mybatisplus.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * <p>
@@ -16,5 +20,16 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProductServiceImpl extends ServiceImpl<ProductMapper, Product> implements IProductService {
+    @Autowired
+    private ProductMapper productMapper;
 
+    @Override
+    public List<Product> getProductList(Page<Product> page, String beginTime, String endTime, String enterpriseName, String servicePlatform, String status, String orderByField, boolean asc) {
+        return this.baseMapper.getProductList(page, beginTime, endTime, enterpriseName, servicePlatform, status, orderByField, asc);
+    }
+
+    @Override
+    public long checkRepetition(Product product) {
+        return productMapper.checkRepetition(product);
+    }
 }

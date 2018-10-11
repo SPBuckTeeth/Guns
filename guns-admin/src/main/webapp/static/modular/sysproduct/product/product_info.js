@@ -48,8 +48,6 @@ ProductInfoDlg.collectData = function() {
     .set('id')
     .set('enterpriseName')
     .set('servicePlatform')
-    .set('createTime')
-    .set('updateTime')
     .set('status')
     .set('logo')
     .set('intro');
@@ -62,6 +60,7 @@ ProductInfoDlg.addSubmit = function() {
 
     this.clearData();
     this.collectData();
+    this.productInfoData['logo'] = $("#myImageFile").attr("src");
 
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/product/add", function(data){
@@ -82,6 +81,7 @@ ProductInfoDlg.editSubmit = function() {
 
     this.clearData();
     this.collectData();
+    this.productInfoData['logo'] = $("#myImageFile").attr("src");
 
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/product/update", function(data){
@@ -96,5 +96,6 @@ ProductInfoDlg.editSubmit = function() {
 }
 
 $(function() {
-
+    //初始化状态选项
+    $("#status").val($("#statusValue").val());
 });
