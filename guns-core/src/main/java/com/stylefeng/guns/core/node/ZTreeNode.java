@@ -1,5 +1,7 @@
 package com.stylefeng.guns.core.node;
 
+import com.stylefeng.guns.core.util.Contant;
+
 /**
  * 
  * jquery ztree 插件的节点
@@ -9,9 +11,9 @@ package com.stylefeng.guns.core.node;
  */
 public class ZTreeNode {
 
-	private Long id;	//节点id
+	private String id;	//节点id
 	
-	private Long pId;//父节点id
+	private String pId;//父节点id
 	
 	private String name;//节点名称
 	
@@ -19,19 +21,19 @@ public class ZTreeNode {
 	
 	private Boolean checked;//是否被选中
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
-	public Long getpId() {
+	public String getpId() {
 		return pId;
 	}
 
-	public void setpId(Long pId) {
+	public void setpId(String pId) {
 		this.pId = pId;
 	}
 
@@ -70,10 +72,10 @@ public class ZTreeNode {
 	public static ZTreeNode createParent(){
 		ZTreeNode zTreeNode = new ZTreeNode();
 		zTreeNode.setChecked(true);
-		zTreeNode.setId(0L);
+		zTreeNode.setId(Contant.BasicNum.ZERO_S);
 		zTreeNode.setName("顶级");
 		zTreeNode.setOpen(true);
-		zTreeNode.setpId(0L);
+		zTreeNode.setpId(Contant.BasicNum.ZERO_S);
 		return zTreeNode;
 	}
 }
