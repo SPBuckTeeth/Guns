@@ -18,7 +18,7 @@ public class GunsGeneratorConfig extends AbstractGeneratorConfig {
         globalConfig.setBaseResultMap(true);
         globalConfig.setBaseColumnList(true);
         globalConfig.setOpen(false);
-        globalConfig.setAuthor("stylefeng");
+        globalConfig.setAuthor("lossdate");
     }
 
     protected void dataSourceConfig() {

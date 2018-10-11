@@ -37,7 +37,7 @@
         </if>
     </select>
 
-    <select id="getMenuIdsByRoleId" resultType="long">
+    <select id="getMenuIdsByRoleId" resultType="String">
         select menuid from
         sys_relation where roleid = #{roleId}
     </select>
