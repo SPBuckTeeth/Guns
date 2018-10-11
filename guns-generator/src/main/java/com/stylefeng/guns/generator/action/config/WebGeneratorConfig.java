@@ -60,7 +60,7 @@ public class WebGeneratorConfig extends AbstractGeneratorConfig {
 //        packageConfig.setXml(genQo.getProjectPackage() + ".modular.system.dao.mapping");
         packageConfig.setEntity(genQo.getProjectPackage() + ".modular."+ genQo.getModuleName() +".model");
         packageConfig.setMapper(genQo.getProjectPackage() + ".modular."+ genQo.getModuleName() +".dao");
-        packageConfig.setXml(genQo.getProjectPackage() + ".modular.system."+ genQo.getModuleName() +".mapping");
+        packageConfig.setXml(genQo.getProjectPackage() + ".modular."+ genQo.getModuleName() +".mapping");
 
         /**
          * 业务代码配置
