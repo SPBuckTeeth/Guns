@@ -49,9 +49,7 @@ ProductProhibitedGoodsInfoDlg.collectData = function() {
     .set('sysProductId')
     .set('name')
     .set('remark')
-    .set('status')
-    .set('createTime')
-    .set('updateTime');
+    .set('status');
 }
 
 /**
@@ -61,6 +59,7 @@ ProductProhibitedGoodsInfoDlg.addSubmit = function() {
 
     this.clearData();
     this.collectData();
+    this.productProhibitedGoodsInfoData['sysProductId'] = $("#sysProductId2").val();
 
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/productProhibitedGoods/add", function(data){
@@ -81,6 +80,7 @@ ProductProhibitedGoodsInfoDlg.editSubmit = function() {
 
     this.clearData();
     this.collectData();
+    this.productProhibitedGoodsInfoData['sysProductId'] = $("#sysProductId3").val();
 
     //提交信息
     var ajax = new $ax(Feng.ctxPath + "/productProhibitedGoods/update", function(data){
@@ -95,5 +95,6 @@ ProductProhibitedGoodsInfoDlg.editSubmit = function() {
 }
 
 $(function() {
-
+    //初始化状态选项
+    $("#status").val($("#statusValue").val());
 });

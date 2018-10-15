@@ -14,11 +14,17 @@ var ProductProhibitedGoods = {
 ProductProhibitedGoods.initColumn = function () {
     return [
         {field: 'selectItem', radio: true},
-            {title: 'id', field: 'id', visible: true, align: 'center', valign: 'middle'},
-            {title: '产品id', field: 'sysProductId', visible: true, align: 'center', valign: 'middle'},
+            {title: 'id', field: 'id', visible: false, align: 'center', valign: 'middle'},
+            {title: '产品名称', field: 'sysProductName', visible: true, align: 'center', valign: 'middle', sortable: false},
             {title: '禁运品名称', field: 'name', visible: true, align: 'center', valign: 'middle'},
-            {title: '备注(保留字段)', field: 'remark', visible: true, align: 'center', valign: 'middle'},
-            {title: '状态', field: 'status', visible: true, align: 'center', valign: 'middle'},
+            {title: '备注', field: 'remark', visible: true, align: 'center', valign: 'middle'},
+            {title: '状态', field: 'status', visible: true, align: 'center', valign: 'middle',formatter: function (value, row, index) {
+                if(value == 1) {
+                    return "无效";
+                } else {
+                    return "有效";
+                }
+            }, sortable: true},
             {title: '创建时间', field: 'createTime', visible: true, align: 'center', valign: 'middle'},
             {title: '更新时间', field: 'updateTime', visible: true, align: 'center', valign: 'middle'}
     ];
@@ -91,13 +97,14 @@ ProductProhibitedGoods.delete = function () {
  */
 ProductProhibitedGoods.search = function () {
     var queryData = {};
-    queryData['condition'] = $("#condition").val();
+    queryData['sysProductId'] = $("#sysProductId").val();
+    queryData['name'] = $("#name").val();
     ProductProhibitedGoods.table.refresh({query: queryData});
 };
 
 $(function () {
     var defaultColunms = ProductProhibitedGoods.initColumn();
     var table = new BSTable(ProductProhibitedGoods.id, "/productProhibitedGoods/list", defaultColunms);
-    table.setPaginationType("client");
+    table.setPaginationType("server");
     ProductProhibitedGoods.table = table.init();
 });

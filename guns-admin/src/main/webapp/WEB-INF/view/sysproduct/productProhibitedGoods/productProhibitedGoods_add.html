@@ -5,16 +5,20 @@
 
             <div class="row">
                 <div class="col-sm-6 b-r">
-                            <#input id="id" name="id" underline="true"/>
-                            <#input id="sysProductId" name="产品id" underline="true"/>
-                            <#input id="name" name="禁运品名称" underline="true"/>
-                            <#input id="remark" name="备注(保留字段)"/>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">产品名称</label>
+                        <div class="col-md-9">
+                            <select id="sysProductId2" placeholder="产品名称" class="form-control chosen-select " tabindex="4">
+                                <option value="" >选择产品</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="hr-line-dashed"></div>
                 </div>
 
                 <div class="col-sm-6">
-                            <#input id="status" name="状态" underline="true"/>
-                            <#input id="createTime" name="创建时间" underline="true"/>
-                            <#input id="updateTime" name="更新时间" underline="true"/>
+                    <#input id="name" name="禁运品名称" underline="true"/>
+                    <#input id="remark" name="备注(保留字段)"/>
                 </div>
             </div>
 
@@ -29,4 +33,26 @@
     </div>
 </div>
 <script src="${ctxPath}/static/modular/sysproduct/productProhibitedGoods/productProhibitedGoods_info.js"></script>
+<script>
+    //加载产品名称
+    $("#sysProductId2").chosen({ width: '73%' });
+    $("#sysProductId3_chosen").css("float","right");
+    $.ajax({
+        url:'${ctxPath}/product/productList',
+        type: 'POST',
+        dataType:'json',
+        success:function(response) {
+            if(response.code == 0) {
+                var html=[];
+                var data = response.data||[];
+                for(var i = 0; i < data.length; i ++) {
+                    html.push('<option value="'+data[i].id+'" ');
+                    html.push('>'+data[i].enterpriseName +'</option>');
+                }
+                $("#sysProductId2").append(html.join(""));
+                $("#sysProductId2").trigger("chosen:updated");
+            }
+        }
+    });
+</script>
 @}

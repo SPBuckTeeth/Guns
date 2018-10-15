@@ -1,7 +1,11 @@
 package com.stylefeng.guns.modular.sysproduct.service;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.modular.sysproduct.model.ProductProhibitedGoods;
 import com.baomidou.mybatisplus.service.IService;
+import com.stylefeng.guns.modular.sysproduct.vo.ProductProhibitedGoodsVO;
+
+import java.util.List;
 
 /**
  * <p>
@@ -13,4 +17,14 @@ import com.baomidou.mybatisplus.service.IService;
  */
 public interface IProductProhibitedGoodsService extends IService<ProductProhibitedGoods> {
 
+    /**
+     * 获取违禁品列表
+     * @param page 分页数据
+     * @param sysProductId 产品id
+     * @param name 违禁品名
+     * @param orderByField 排序
+     * @param asc 排序
+     * @return 违禁品列表
+     */
+    List<ProductProhibitedGoodsVO> getProductProhibitedGoods(Page<ProductProhibitedGoodsVO> page, String sysProductId, String name, String orderByField, boolean asc);
 }

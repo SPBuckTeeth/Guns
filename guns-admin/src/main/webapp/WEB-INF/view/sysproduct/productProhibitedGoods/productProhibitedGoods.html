@@ -10,7 +10,12 @@
                     <div class="col-sm-12">
                         <div class="row">
                             <div class="col-sm-3">
-                                <#NameCon id="condition" name="名称" />
+                                <#SelectCon id="sysProductId" name="产品名称" >
+                                    <option value="">选择产品</option>
+                                </#SelectCon>
+                            </div>
+                            <div class="col-sm-3">
+                                <#NameCon id="name" name="禁运品名称" />
                             </div>
                             <div class="col-sm-3">
                                 <#button name="搜索" icon="fa-search" clickFun="ProductProhibitedGoods.search()"/>
@@ -35,4 +40,25 @@
     </div>
 </div>
 <script src="${ctxPath}/static/modular/sysproduct/productProhibitedGoods/productProhibitedGoods.js"></script>
+<script>
+    //加载产品名称
+    $("#sysProductId").chosen({ width: '100%'});
+    $.ajax({
+        url:'${ctxPath}/product/productList',
+        type: 'POST',
+        dataType:'json',
+        success:function(response) {
+            if(response.code == 0) {
+                var html=[];
+                var data = response.data||[];
+                for(var i = 0; i < data.length; i ++) {
+                    html.push('<option value="'+data[i].id+'" ');
+                    html.push('>'+data[i].enterpriseName +'</option>');
+                }
+                $("#sysProductId").append(html.join(""));
+                $("#sysProductId").trigger("chosen:updated");
+            }
+        }
+    });
+</script>
 @}

@@ -1,7 +1,12 @@
 package com.stylefeng.guns.modular.sysproduct.controller;
 
+import com.baomidou.mybatisplus.plugins.Page;
 import com.stylefeng.guns.core.base.controller.BaseController;
+import com.stylefeng.guns.core.common.constant.factory.PageFactory;
+import com.stylefeng.guns.core.util.Contant;
 import com.stylefeng.guns.modular.sysproduct.model.ProductProhibitedGoods;
+import com.stylefeng.guns.modular.sysproduct.vo.ProductProhibitedGoodsVO;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -11,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.stylefeng.guns.core.log.LogObjectHolder;
 import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.sysproduct.service.IProductProhibitedGoodsService;
+
+import java.util.List;
 
 /**
  * 系统违禁品管理控制器
@@ -59,8 +66,18 @@ public class ProductProhibitedGoodsController extends BaseController {
      */
     @RequestMapping(value = "/list")
     @ResponseBody
-    public Object list(String condition) {
-        return productProhibitedGoodsService.selectList(null);
+    public Object list(@RequestParam(required = false) String sysProductId,
+                       @RequestParam(required = false) String name) {
+        Page<ProductProhibitedGoodsVO> page = new PageFactory<ProductProhibitedGoodsVO>().defaultPage();
+        String orderByField = page.getOrderByField();
+        if(!StringUtils.isBlank(orderByField)) {
+            orderByField = Contant.commonStringUtil(orderByField);
+            page.setOrderByField(orderByField);
+        }
+
+        List<ProductProhibitedGoodsVO> result = productProhibitedGoodsService.getProductProhibitedGoods(page, sysProductId, name, page.getOrderByField(), page.isAsc());
+        page.setRecords(result);
+        return super.packForBT(page);
     }
 
     /**

@@ -6,6 +6,7 @@ import com.stylefeng.guns.core.common.constant.factory.PageFactory;
 import com.stylefeng.guns.core.common.exception.BizExceptionEnum;
 import com.stylefeng.guns.core.exception.GunsException;
 import com.stylefeng.guns.core.util.Contant;
+import com.stylefeng.guns.core.util.Response;
 import com.stylefeng.guns.core.util.ResponseUtil;
 import com.stylefeng.guns.modular.sysproduct.exception.ProductExceptionEnum;
 import org.apache.commons.lang.StringUtils;
@@ -20,7 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.stylefeng.guns.modular.sysproduct.model.Product;
 import com.stylefeng.guns.modular.sysproduct.service.IProductService;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 系统产品管理控制器
@@ -133,5 +136,14 @@ public class ProductController extends BaseController {
     @ResponseBody
     public Object detail(@PathVariable("productId") String productId) {
         return productService.selectById(productId);
+    }
+
+    /**
+     * 所有产品列表
+     */
+    @RequestMapping(value = "productList")
+    @ResponseBody
+    public Object mobileCodeList(HttpServletRequest request) {
+        return ResponseUtil.ok(productService.selectList(null));
     }
 }
